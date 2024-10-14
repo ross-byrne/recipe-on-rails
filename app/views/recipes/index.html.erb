@@ -1,2 +1,11 @@
-<h1>Recipes#index</h1>
-<p>Find me in app/views/recipes/index.html.erb</p>
+<h1 class="text-4xl font-semibold pb-4">Recipes</h1>
+
+<% if @all_recipes.empty? %>
+    <div class="font-medium">No Recipes available</div>
+<% else %>
+    <% @all_recipes.each do |recipe| %>
+        <div class="px-4 py-2">
+            <%= recipe.title %>
+        </div>
+    <% end %>
+<% end %>
