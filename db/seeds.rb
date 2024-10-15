@@ -7,6 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+#
 
 # Decodes and cleans up scraped image url
 def process_image_url(url)
@@ -24,13 +25,25 @@ end
 recipe_file = File.read('data/recipes-en.json')
 recipe_list = JSON.parse(recipe_file)
 
-puts "Before: Recipe: #{Recipe.all.count}. Ingredients: #{Ingredient.all.count}"
-puts "Seeding Database with recipe data..."
+puts "Seeding Database with ingredient data..."
+Ingredient.transaction do
+  unique_ingredients = recipe_list.map { |x| x["ingredients"] }.flatten.uniq
+  unique_ingredients.each do |item|
+    new_ingredient = Ingredient.find_or_initialize_by(title: item)
+    new_ingredient.save! # using save here as it is faster than create
+  end
+end
 
-# Seed DB using find_or_create
-ActiveRecord::Base.transaction do
+# build ingredient title to id map
+ingredient_map = Ingredient.all.to_h { |item| [ item.title, item.id ] }
+
+puts "Seeding Database with recipe data..."
+Recipe.transaction do
   recipe_list.each do |parsed_recipe|
+    # parse recipe ingredients and use map to find their ids
     parsed_ingredients = parsed_recipe["ingredients"].uniq
+    ingredient_ids = parsed_ingredients.map { |x| ingredient_map[x] }.to_a
+
     data = parsed_recipe.slice(
       "title",
       "cook_time",
@@ -40,21 +53,15 @@ ActiveRecord::Base.transaction do
       "image"
     )
 
-    Recipe.find_or_create_by!(title: data["title"]) do |recipe|
+    new_recipe = Recipe.find_or_initialize_by(title: data["title"]) do |recipe|
       recipe.cook_time = data["cook_time"]
       recipe.prep_time = data["prep_time"]
       recipe.category = data["category"]
       recipe.author = data["author"]
       recipe.image = process_image_url(data["image"])
-
-      # parse ingredients and add to recipe
-      ingredients = parsed_ingredients.map do |item|
-        Ingredient.find_or_create_by!(title: item)
-      end
-
-      recipe.ingredients = ingredients
+      recipe.ingredient_ids = ingredient_ids
     end
+    # using save here as it is faster than create
+    new_recipe.save!
   end
 end
-
-puts "After: Recipe: #{Recipe.all.count}. Ingredients: #{Ingredient.all.count}"
