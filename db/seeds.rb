@@ -24,24 +24,38 @@ end
 recipe_file = File.read('data/recipes-en.json')
 recipe_list = JSON.parse(recipe_file)
 
-puts "Number of recipes: #{recipe_list.size}"
-puts recipe_list.first
+puts "Before: Recipe: #{Recipe.all.count}. Ingredients: #{Ingredient.all.count}"
+puts "Seeding Database with recipe data..."
 
+# TODO: make ingredients and recipes many to many
 # Seed DB using find_or_create
-recipe_list.each do |recipe|
-  data = recipe.slice(
-    "title",
-    "cook_time",
-    "prep_time",
-    "category",
-    "author",
-    "image"
-  )
+ActiveRecord::Base.transaction do
+  recipe_list.each do |parsed_recipe|
+    parsed_ingredients = parsed_recipe["ingredients"]
+    data = parsed_recipe.slice(
+      "title",
+      "cook_time",
+      "prep_time",
+      "category",
+      "author",
+      "image"
+    )
+    new_recipe = Recipe.new(data)
 
-  # decode and process url
-  process_url = process_image_url(data["image"])
-  data["image"] = process_url
+    Recipe.find_or_create_by!(title: new_recipe.title) do |recipe|
+      recipe.cook_time = new_recipe.cook_time
+      recipe.prep_time = new_recipe.prep_time
+      recipe.category = new_recipe.category
+      recipe.author = new_recipe.author
+      recipe.image = process_image_url(new_recipe.image)
 
-  test = Recipe.new(data)
-  puts test.image
+      # parse ingredients and add to recipe
+      ingredients = parsed_ingredients.map do |item|
+         Ingredient.new(title: item)
+      end
+      recipe.ingredients = ingredients
+    end
+  end
 end
+
+puts "After: Recipe: #{Recipe.all.count}. Ingredients: #{Ingredient.all.count}"
