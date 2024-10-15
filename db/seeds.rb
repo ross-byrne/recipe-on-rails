@@ -27,11 +27,10 @@ recipe_list = JSON.parse(recipe_file)
 puts "Before: Recipe: #{Recipe.all.count}. Ingredients: #{Ingredient.all.count}"
 puts "Seeding Database with recipe data..."
 
-# TODO: make ingredients and recipes many to many
 # Seed DB using find_or_create
 ActiveRecord::Base.transaction do
   recipe_list.each do |parsed_recipe|
-    parsed_ingredients = parsed_recipe["ingredients"]
+    parsed_ingredients = parsed_recipe["ingredients"].uniq
     data = parsed_recipe.slice(
       "title",
       "cook_time",
@@ -40,19 +39,19 @@ ActiveRecord::Base.transaction do
       "author",
       "image"
     )
-    new_recipe = Recipe.new(data)
 
-    Recipe.find_or_create_by!(title: new_recipe.title) do |recipe|
-      recipe.cook_time = new_recipe.cook_time
-      recipe.prep_time = new_recipe.prep_time
-      recipe.category = new_recipe.category
-      recipe.author = new_recipe.author
-      recipe.image = process_image_url(new_recipe.image)
+    Recipe.find_or_create_by!(title: data["title"]) do |recipe|
+      recipe.cook_time = data["cook_time"]
+      recipe.prep_time = data["prep_time"]
+      recipe.category = data["category"]
+      recipe.author = data["author"]
+      recipe.image = process_image_url(data["image"])
 
       # parse ingredients and add to recipe
       ingredients = parsed_ingredients.map do |item|
-         Ingredient.new(title: item)
+        Ingredient.find_or_create_by!(title: item)
       end
+
       recipe.ingredients = ingredients
     end
   end
