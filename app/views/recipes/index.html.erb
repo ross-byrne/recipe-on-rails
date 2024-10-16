@@ -1,12 +1,19 @@
 
-<div class="container mx-auto mt-28">
-    <h1 class="text-4xl font-semibold pb-4 text-center">Recipes</h1>
+<div class="container mx-auto h-full flex flex-col pt-12">
+    <h1 class="text-4xl font-semibold text-center shrink pb-12">Recipes</h1>
 
     <% if @all_recipes.empty? %>
         <div class="font-medium">No Recipes available</div>
     <% else %>
-        <% @all_recipes.each do |recipe| %>
-            <%= render "recipe", recipe: recipe  %>
-        <% end %>
+        <div class="grid grid-cols-2 grow overflow-hidden">
+            <div class="h-full overflow-auto">
+                <% @all_recipes.each do |recipe| %>
+                    <%= render "recipe", recipe: recipe  %>
+                <% end %>
+            </div>
+            <div class="px-4 text-center">
+                Selected recipe here
+            </div>
+        </div>
     <% end %>
 </div>
