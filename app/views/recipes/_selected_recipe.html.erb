@@ -1,0 +1,23 @@
+
+
+<div class="flex p-4">
+    <div class="h-full shrink">
+        <div class="my-4">
+            <div class="flex">
+                <div class="shrink-0">
+                    <%= image_tag(recipe.image, class: "h-72 w-full aspect-square object-cover rounded-xl") %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pl-12 pt-2 text-left">
+      <div class="block mt-1 text-2xl leading-tight font-medium text-black"> <%= recipe.title %> </div>
+      <div class="mt-2 text-slate-500" >
+          <ul>
+            <% recipe.ingredients.each do |ingredient| %>
+                <li><%= ingredient.title %></li>
+            <% end %>
+          </ul>
+      </div>
+    </div>
+</div>

@@ -12,7 +12,11 @@
                 <% end %>
             </div>
             <div class="px-4 text-center">
-                Selected recipe here
+                <% if @selected.blank? %>
+                    <div class="p-4">No Recipe Selected</div>
+                <% else %>
+                    <%= render "selected_recipe", recipe: @selected  %>
+                <% end %>
             </div>
         </div>
     <% end %>
