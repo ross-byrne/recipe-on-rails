@@ -1,6 +1,15 @@
 
 <div class="container mx-auto h-full flex flex-col pt-12">
-    <h1 class="text-4xl font-semibold text-center shrink pb-12">Recipes</h1>
+    <h1 class="text-4xl font-semibold text-center shrink pb-10">Recipes</h1>
+
+    <div class="self-center pb-6 w-full max-w-xl">
+        <input
+            type="text"
+            placeholder="Search..."
+            class="input input-bordered w-full rounded-md"
+            name="search"
+        />
+    </div>
 
     <% if @all_recipes.empty? %>
         <div class="font-medium">No Recipes available</div>
