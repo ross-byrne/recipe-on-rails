@@ -1,0 +1,11 @@
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-4">
+  <div class="md:flex">
+    <div class="md:shrink-0">
+        <%= image_tag(recipe.image, class: "h-48 w-full aspect-square object-cover md:h-full md:w-48") %>
+    </div>
+    <div class="p-8">
+      <div class="block mt-1 text-lg leading-tight font-medium text-black"> <%= recipe.title %> </div>
+      <p class="mt-2 text-slate-500">Number of ingredients: <%= recipe.ingredients.count %> </p>
+    </div>
+  </div>
+</div>

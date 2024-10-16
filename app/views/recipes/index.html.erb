@@ -1,14 +1,12 @@
+
 <div class="container mx-auto mt-28">
-    <h1 class="text-4xl font-semibold pb-4">Recipes</h1>
+    <h1 class="text-4xl font-semibold pb-4 text-center">Recipes</h1>
 
     <% if @all_recipes.empty? %>
         <div class="font-medium">No Recipes available</div>
     <% else %>
         <% @all_recipes.each do |recipe| %>
-            <div class="px-4 py-2">
-            <div>Recipe: <%= recipe.title %></div>
-            <div>Number of ingredients: <%= recipe.ingredients.count %></div>
-            </div>
+            <%= render "recipe", recipe: recipe  %>
         <% end %>
     <% end %>
 </div>
