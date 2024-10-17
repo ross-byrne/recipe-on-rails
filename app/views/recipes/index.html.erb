@@ -1,18 +1,26 @@
 <div
     class="container mx-auto h-full flex flex-col pt-12"
     hx-headers='{"X-CSRF-Token": "<%= form_authenticity_token %>"}'
+    data-controller="recipes"
+    data-action="click->recipes#hideSearchResults"
 >
     <h1 class="text-4xl font-semibold text-center shrink pb-10">Recipes</h1>
 
-    <%= render "filter_controls" %>
+    <%= render partial: "filter_controls" %>
+
+    <div class="font-medium">Filtering by:</div>
+    <div
+        id="filtering-by"
+        class="overflow-auto max-h-48"
+    ></div>
 
     <% if @all_recipes.empty? %>
         <div class="font-medium">No Recipes available</div>
     <% else %>
-        <div class="grid grid-cols-2 grow overflow-hidden">
+        <div class="grid grid-cols-2 grow overflow-hidden w-full">
             <div id="recipe-list" class="h-full overflow-auto">
                 <% @all_recipes.each do |recipe| %>
-                    <%= render "recipe", recipe: recipe  %>
+                    <%= render partial: "recipe", locals: { recipe: recipe } %>
                 <% end %>
             </div>
             <div id="selected-recipe">

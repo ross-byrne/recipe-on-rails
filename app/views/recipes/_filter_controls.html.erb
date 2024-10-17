@@ -22,10 +22,17 @@
             placeholder="Search..."
             class="input input-bordered w-full rounded-md"
             name="search"
-            hx-post="/recipes/search"
+            hx-post="/ingredients/search"
             hx-trigger="input changed delay:500ms, search"
-            hx-target="#recipe-list"
+            hx-target="#search-results"
             hx-swap="innerHTML"
+            data-action="click->recipes#show"
         />
+        <div
+            id="search-results"
+            class="w-full border-2 max-h-96 overflow-auto bg-white hidden absolute z-10 max-w-xl"
+        >
+            <div class="py-1 px-3">Type to search...</div>
+        </div>
     </label>
 </div>
