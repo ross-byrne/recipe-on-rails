@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   # get "/", to: "recipes#index"
   root "recipes#index"
 
-  resource :recipes, only: [ :show ] do
-    post :search
+  resources :recipes, only: [ :show ] do
+    post :search, on: :collection
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

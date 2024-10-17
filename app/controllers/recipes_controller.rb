@@ -4,14 +4,14 @@ class RecipesController < ApplicationController
       .includes(:ingredients)
       .order(:title)
       .limit(100)
-
-    unless recipe_params[:selected].blank?
-      @selected = Recipe.find(recipe_params[:selected])
-    end
   end
 
   def show
     @recipe = Recipe.find(params[:id])
+
+    respond_to do |format|
+     format.html { render layout: false, status: :ok }
+   end
   end
 
   def search
@@ -24,9 +24,5 @@ class RecipesController < ApplicationController
      respond_to do |format|
       format.html { render layout: false, status: :ok }
     end
-  end
-
-  def recipe_params
-    params.permit(:selected)
   end
 end
