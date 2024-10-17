@@ -30,8 +30,4 @@ class IngredientsController < ApplicationController
   def set_query
     @query = params[:search].downcase
   end
-
-  def ingredient_params
-    params.permit(:query)
-  end
 end
