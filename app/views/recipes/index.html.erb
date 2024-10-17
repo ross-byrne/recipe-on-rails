@@ -1,5 +1,7 @@
-
-<div class="container mx-auto h-full flex flex-col pt-12">
+<div
+    class="container mx-auto h-full flex flex-col pt-12"
+    hx-headers='{"X-CSRF-Token": "<%= form_authenticity_token %>"}'
+>
     <h1 class="text-4xl font-semibold text-center shrink pb-10">Recipes</h1>
 
     <div class="self-center pb-6 w-full max-w-xl">
@@ -8,6 +10,10 @@
             placeholder="Search..."
             class="input input-bordered w-full rounded-md"
             name="search"
+            hx-post="/recipes/search"
+            hx-trigger="input changed delay:500ms, search"
+            hx-target="#recipe-list"
+            hx-swap="innerHTML"
         />
     </div>
 
@@ -15,12 +21,12 @@
         <div class="font-medium">No Recipes available</div>
     <% else %>
         <div class="grid grid-cols-2 grow overflow-hidden">
-            <div class="h-full overflow-auto">
+            <div id="recipe-list" class="h-full overflow-auto">
                 <% @all_recipes.each do |recipe| %>
                     <%= render "recipe", recipe: recipe  %>
                 <% end %>
             </div>
-            <div class="px-4 text-center">
+            <div id="selected-recipe" class="px-4 text-center">
                 <% if @selected.blank? %>
                     <div class="p-4">No Recipe Selected</div>
                 <% else %>
