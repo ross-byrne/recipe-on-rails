@@ -4,18 +4,7 @@
 >
     <h1 class="text-4xl font-semibold text-center shrink pb-10">Recipes</h1>
 
-    <div class="self-center pb-6 w-full max-w-xl">
-        <input
-            type="text"
-            placeholder="Search..."
-            class="input input-bordered w-full rounded-md"
-            name="search"
-            hx-post="/recipes/search"
-            hx-trigger="input changed delay:500ms, search"
-            hx-target="#recipe-list"
-            hx-swap="innerHTML"
-        />
-    </div>
+    <%= render "filter_controls" %>
 
     <% if @all_recipes.empty? %>
         <div class="font-medium">No Recipes available</div>
@@ -26,12 +15,8 @@
                     <%= render "recipe", recipe: recipe  %>
                 <% end %>
             </div>
-            <div id="selected-recipe" class="px-4 text-center">
-                <% if @selected.blank? %>
-                    <div class="p-4">No Recipe Selected</div>
-                <% else %>
-                    <%= render "selected_recipe", recipe: @selected  %>
-                <% end %>
+            <div id="selected-recipe">
+               <div class="p-4 text-center">No Recipe Selected</div>
             </div>
         </div>
     <% end %>

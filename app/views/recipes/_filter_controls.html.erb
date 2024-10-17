@@ -1,0 +1,31 @@
+<div class="self-center pb-8 w-full max-w-xl">
+    <label>
+        <span>Search by recipe name</span>
+        <input
+            type="text"
+            placeholder="Search..."
+            class="input input-bordered w-full rounded-md"
+            name="search"
+            hx-post="/recipes/search"
+            hx-trigger="input changed delay:500ms, search"
+            hx-target="#recipe-list"
+            hx-swap="innerHTML"
+        />
+    </label>
+
+    <div class="pt-3 text-center text-slate-700">Or</div>
+
+    <label>
+        <span>Filter by ingredient</span>
+        <input
+            type="text"
+            placeholder="Search..."
+            class="input input-bordered w-full rounded-md"
+            name="search"
+            hx-post="/recipes/search"
+            hx-trigger="input changed delay:500ms, search"
+            hx-target="#recipe-list"
+            hx-swap="innerHTML"
+        />
+    </label>
+</div>
