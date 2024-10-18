@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for recipe-on-rails on 2024-10-18T18:54:59+02:00
+# fly.toml app configuration file generated for recipe-on-rails-icy-silence-1686 on 2024-10-18T19:04:08+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -10,7 +10,11 @@ console_command = '/rails/bin/rails console'
 [build]
 
 [deploy]
-release_command = "bin/rails db:prepare"
+release_command = 'bundle exec rails db:migrate'
+
+[[mounts]]
+source = 'data'
+destination = '/data'
 
 [http_service]
 internal_port = 3000
@@ -39,11 +43,7 @@ X-Forwarded-Proto = 'https'
 memory = '1gb'
 cpu_kind = 'shared'
 cpus = 1
-[mounts]
-  source="data"
-  destination="/data"
 
 [[statics]]
-  guest_path = "/rails/public"
-  url_prefix = "/"
-
+guest_path = '/rails/public'
+url_prefix = '/'
