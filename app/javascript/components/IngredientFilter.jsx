@@ -45,12 +45,9 @@ export default function IngredientFilter({ setRecipes, searchUrl }) {
         placeholder="Search..."
         className="input input-bordered w-full rounded-md"
         name="search"
-        onFocus={() => setSearchFocused(true)}
-        onBlur={() => setSearchFocused(false)}
         onChange={onSearch}
       />
       <IngredientSearchResults
-        show={searchFocused}
         ingredients={ingredients}
         selectedIngredients={selectedIngredients}
         setSelectedIngredients={setSelectedIngredients}
@@ -61,17 +58,11 @@ export default function IngredientFilter({ setRecipes, searchUrl }) {
 }
 
 function IngredientSearchResults({
-  show,
   ingredients,
   selectedIngredients,
   setSelectedIngredients,
 }) {
-  if (!show) {
-    return;
-  }
-
-  function onClick(e, item) {
-    e.stopPropagation();
+  function onClick(item) {
     setSelectedIngredients([...selectedIngredients, item]);
   }
 
@@ -82,7 +73,7 @@ function IngredientSearchResults({
       <div
         key={`ingredient-search-${x.id}`}
         className="px-4 py-1 cursor-pointer hover:bg-slate-400"
-        onClick={(e) => onClick(e, x)}
+        onClick={() => onClick(x)}
       >
         {x.title}
       </div>
@@ -90,9 +81,7 @@ function IngredientSearchResults({
   }
 
   return (
-    <div className="border-2 max-h-96 overflow-auto bg-white absolute z-10">
-      {content}
-    </div>
+    <div className="w-full border-2 max-h-96 overflow-auto mt-2">{content}</div>
   );
 }
 
