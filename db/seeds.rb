@@ -22,7 +22,7 @@ def process_image_url(url)
 end
 
 # Load Recipes from json file and parse to hash
-recipe_file = File.read('data/recipes-en.json')
+recipe_file = File.read('seed-data/recipes-en.json')
 recipe_list = JSON.parse(recipe_file)
 
 puts "Seeding Database with ingredient data..."

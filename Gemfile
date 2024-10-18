@@ -55,3 +55,5 @@ end
 gem "tailwindcss-rails", "~> 2.7"
 
 gem "jsbundling-rails", "~> 1.3"
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
