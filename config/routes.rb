@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # get "/", to: "recipes#index"
   root "home#index"
 
   resources :recipes, only: [ :index, :show ] do
