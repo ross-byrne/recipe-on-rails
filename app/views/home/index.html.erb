@@ -1,7 +1,4 @@
-<% data = {
-    root_url: request.base_url,
-    starting_recipes: @all_recipes }
-%>
+<% data = { root_url: request.base_url } %>
 <%= javascript_tag do %>
     // Save data in js for react to pick up
     window.data = <%= data.to_json.html_safe %>

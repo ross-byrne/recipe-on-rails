@@ -16,14 +16,11 @@ export default function App() {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  // get recipes served from rails along with react
-  // to reduce load time
+  // load recipes
   useEffect(() => {
-    const data = window?.data?.starting_recipes ?? [];
-    setRecipes(data);
-    // fetch(RECIPE_URL)
-    //   .then((response) => response.json())
-    //   .then((data) => setRecipes(data));
+    fetch(RECIPE_URL)
+      .then((response) => response.json())
+      .then((data) => setRecipes(data));
   }, []);
 
   return (
