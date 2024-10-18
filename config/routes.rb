@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
   root "home#index"
 
-  resources :recipes, only: [ :index, :show ] do
-    post :search, on: :collection
-  end
-
-  resources :ingredients, only: [ :show ] do
-    post :search, on: :collection
-  end
+  resources :recipes, only: [ :index ]
+  resources :ingredients, only: [ :index ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

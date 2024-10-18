@@ -1,20 +1,17 @@
 class RecipesController < ApplicationController
   def index
-    @all_recipes = Recipe
+    query = Recipe
       .includes(:ingredients)
       .order(:title)
-      .limit(100)
-  end
 
-  def show
-    @recipe = Recipe.find(params[:id])
-  end
+    if params[:search].present?
+      query = query
+        .where("lower(title) LIKE :query", { query: "%#{params[:search].downcase}%" })
+        .limit(20)
+    else
+      query = query.limit(100)
+    end
 
-  def search
-     @search_results = Recipe
-       .includes(:ingredients)
-       .where("lower(title) LIKE :query", { query: "%#{params[:search].downcase}%" })
-       .order(:title)
-       .limit(20)
+    @recipes = query
   end
 end

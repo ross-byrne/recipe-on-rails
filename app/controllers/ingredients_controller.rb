@@ -1,15 +1,7 @@
 class IngredientsController < ApplicationController
-  before_action :set_query, only: [ :search ]
+  before_action :set_query, only: [ :index ]
 
-  def show
-    @selected = Ingredient.find(params[:id])
-
-    respond_to do |format|
-      format.html { render layout: false, status: :ok }
-    end
-  end
-
-  def search
+  def index
     if @query.present?
       @search_results = Ingredient
         .includes(:recipes)
@@ -18,10 +10,6 @@ class IngredientsController < ApplicationController
         .limit(10)
     else
       @search_results = []
-    end
-
-    respond_to do |format|
-      format.html { render layout: false, status: :ok }
     end
   end
 

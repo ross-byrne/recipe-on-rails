@@ -4,7 +4,9 @@ import Recipe from "./Recipe";
 export default function RecipeList({ recipes, onRecipeClicked }) {
   if (!recipes.length) {
     return (
-      <div className="p-4 font-medium text-center">No Recipes available</div>
+      <div className="col-span-2 p-4 font-medium text-center">
+        No Recipes available
+      </div>
     );
   }
 
@@ -16,9 +18,5 @@ export default function RecipeList({ recipes, onRecipeClicked }) {
     />
   ));
 
-  return (
-    <div id="recipe-list" className="h-full overflow-auto">
-      {listItems}
-    </div>
-  );
+  return <div className="h-full overflow-auto col-span-2">{listItems}</div>;
 }

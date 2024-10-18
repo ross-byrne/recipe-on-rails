@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export default function SelectedRecipe({ recipe }) {
   if (!recipe) {
     return (
-      <div id="selected-recipe">
+      <div className="col-span-2">
         <div className="p-4 font-medium text-center">No Recipe Selected</div>
       </div>
     );
@@ -15,7 +15,7 @@ export default function SelectedRecipe({ recipe }) {
   ));
 
   return (
-    <div className="flex pl-8 p-4">
+    <div className="col-span-2 flex pl-8 p-4">
       <div className="h-full shrink-0">
         <img
           className="h-72 w-full aspect-square object-cover rounded-xl"

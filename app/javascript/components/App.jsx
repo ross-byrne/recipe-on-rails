@@ -10,7 +10,7 @@ const root = createRoot(appDiv);
 root.render(<App />);
 
 const ROOT_URL = window.data.root_url;
-const RECIPE_URL = `${ROOT_URL}/recipes/`;
+const RECIPE_URL = `${ROOT_URL}/recipes`;
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -26,8 +26,8 @@ export default function App() {
   return (
     <div className="mx-24 h-full flex flex-col pt-12">
       <h1 className="text-4xl font-semibold text-center pb-10">Recipes</h1>
-      <div className="grid grid-cols-3 overflow-hidden w-full gap-4">
-        <FilterControls />
+      <div className="grid grid-cols-5 overflow-hidden w-full gap-4">
+        <FilterControls setRecipes={setRecipes} />
         <RecipeList recipes={recipes} onRecipeClicked={setSelectedRecipe} />
         <SelectedRecipe recipe={selectedRecipe} />
       </div>
