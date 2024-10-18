@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import FilteredByIngredients from "./FilteredByIngredients";
+import IngredientSearchResults from "./IngredientSearchResults";
 
 const ROOT_URL = window.data.root_url;
 const IngredientURL = `${ROOT_URL}/ingredients`;
 
 export default function IngredientFilter({ setRecipes, searchUrl }) {
   const [searchValue, setSearchValue] = useState("");
-  const [searchFocused, setSearchFocused] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // debounce search results
   useEffect(() => {
     if (loading) {
       return;
@@ -37,6 +39,22 @@ export default function IngredientFilter({ setRecipes, searchUrl }) {
     setSearchValue(search);
   }
 
+  // filter recipes by filtered ingredients
+  useEffect(() => {
+    if (loading) {
+      return; // don't run on first load'
+    }
+
+    let paramIds = selectedIngredients.map((x) => `ingredient_ids[]=${x.id}`);
+    paramIds = paramIds.join("&");
+    const params = new URLSearchParams(paramIds).toString();
+
+    // search for and set recipes
+    fetch(`${searchUrl}?${params}`)
+      .then((response) => response.json())
+      .then((data) => setRecipes(data));
+  }, [selectedIngredients]);
+
   return (
     <label>
       <span>Filter by ingredient</span>
@@ -48,58 +66,12 @@ export default function IngredientFilter({ setRecipes, searchUrl }) {
         onChange={onSearch}
       />
       <IngredientSearchResults
+        noResult={!!searchValue && !ingredients.length}
         ingredients={ingredients}
         selectedIngredients={selectedIngredients}
         setSelectedIngredients={setSelectedIngredients}
       />
       <FilteredByIngredients ingredients={selectedIngredients} />
     </label>
-  );
-}
-
-function IngredientSearchResults({
-  ingredients,
-  selectedIngredients,
-  setSelectedIngredients,
-}) {
-  function onClick(item) {
-    setSelectedIngredients([...selectedIngredients, item]);
-  }
-
-  let content = <div className="py-1 px-3">Type to search...</div>;
-
-  if (!!ingredients?.length) {
-    content = ingredients.map((x) => (
-      <div
-        key={`ingredient-search-${x.id}`}
-        className="px-4 py-1 cursor-pointer hover:bg-slate-400"
-        onClick={() => onClick(x)}
-      >
-        {x.title}
-      </div>
-    ));
-  }
-
-  return (
-    <div className="w-full border-2 max-h-96 overflow-auto mt-2">{content}</div>
-  );
-}
-
-function FilteredByIngredients({ ingredients }) {
-  let content = <div></div>;
-
-  if (!!ingredients.length) {
-    content = ingredients.map((x) => (
-      <ol key={`ingredient-filter-${x.id}`} className="px-4 py-1">
-        {x.title}
-      </ol>
-    ));
-  }
-
-  return (
-    <div className="w-full max-h-96 overflow-auto max-w-xl mt-4">
-      <div className="text-xl font-medium">Filtered by:</div>
-      <ul>{content}</ul>
-    </div>
   );
 }

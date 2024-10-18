@@ -16,8 +16,6 @@ export default function Controls({ setRecipes }) {
 
     // debounce search
     const timeoutId = setTimeout(() => {
-      console.log("Search for: ", searchValue);
-
       const params = new URLSearchParams({
         search: searchValue,
       }).toString();
