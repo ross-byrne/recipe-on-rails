@@ -4,7 +4,7 @@ export default function SelectedRecipe({ recipe }) {
   if (!recipe) {
     return (
       <div id="selected-recipe">
-        <div className="p-4 text-center">No Recipe Selected</div>
+        <div className="p-4 font-medium text-center">No Recipe Selected</div>
       </div>
     );
   }
@@ -19,7 +19,8 @@ export default function SelectedRecipe({ recipe }) {
       <div className="h-full shrink-0">
         <img
           className="h-72 w-full aspect-square object-cover rounded-xl"
-          href={recipe.image}
+          src={recipe.image}
+          alt={recipe.title}
         />
       </div>
       <div className="pl-8 text-left break-words">

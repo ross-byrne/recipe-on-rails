@@ -1,6 +1,8 @@
 import React from "react";
 
 export default function Recipe({ recipe, onClicked }) {
+  const ingredientsCount = recipe.ingredients?.length ?? 0;
+
   return (
     <div
       className="max-w-md mx-auto bg-white rounded-xl drop-shadow-md overflow-hidden md:max-w-2xl my-4 hover:shadow-lg hover:cursor-pointer"
@@ -10,7 +12,8 @@ export default function Recipe({ recipe, onClicked }) {
         <div className="md:shrink-0">
           <img
             className="h-48 w-full aspect-square object-cover md:h-full md:w-48"
-            href={recipe.image}
+            src={recipe.image}
+            alt={recipe.title}
           />
         </div>
         <div className="p-8">
@@ -18,7 +21,7 @@ export default function Recipe({ recipe, onClicked }) {
             {recipe.title}
           </div>
           <p className="mt-2 text-slate-500">
-            Number of ingredients: {recipe.ingredients.length}
+            Number of ingredients: {ingredientsCount}
           </p>
         </div>
       </div>

@@ -3,7 +3,9 @@ import Recipe from "./Recipe";
 
 export default function RecipeList({ recipes, onRecipeClicked }) {
   if (!recipes.length) {
-    return <div className="font-medium text-center">No Recipes available</div>;
+    return (
+      <div className="p-4 font-medium text-center">No Recipes available</div>
+    );
   }
 
   const listItems = recipes.map((x) => (
