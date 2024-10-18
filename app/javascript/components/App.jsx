@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { createRoot } from "react-dom/client";
 import RecipeList from "./RecipeList";
 import SelectedRecipe from "./SelectedRecipe";
+
+// attach app to dom
+const root = createRoot(document.getElementById("app"));
+root.render(<App />);
 
 const testRecipes = [
   {

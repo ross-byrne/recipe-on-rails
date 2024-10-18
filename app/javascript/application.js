@@ -1,3 +1,3 @@
 import "@hotwired/turbo-rails";
 import "./controllers";
-import "./components/index.jsx";
+import "./components/App.jsx";
