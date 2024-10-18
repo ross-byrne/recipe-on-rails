@@ -1,21 +1,21 @@
 class IngredientsController < ApplicationController
-  before_action :set_query, only: [ :index ]
+  before_action :set_search, only: [ :index ]
 
   def index
-    if @query.present?
-      @search_results = Ingredient
+    if @search.present?
+      @ingredients = Ingredient
         .includes(:recipes)
-        .where("lower(title) LIKE :query", { query: "%#{@query}%" })
+        .where("lower(title) LIKE :search", { search: "%#{@search}%" })
         .order(:title)
         .limit(10)
     else
-      @search_results = []
+      @ingredients = []
     end
   end
 
   private
 
-  def set_query
-    @query = params[:search].downcase
+  def set_search
+    @search = params[:search].downcase
   end
 end
