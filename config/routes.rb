@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   # get "/", to: "recipes#index"
-  root "recipes#index"
+  root "home#index"
 
-  resources :recipes, only: [ :show ] do
+  resources :recipes, only: [ :index, :show ] do
     post :search, on: :collection
   end
 

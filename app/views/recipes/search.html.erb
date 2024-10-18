@@ -1,7 +1,0 @@
-<% if @search_results.empty? %>
-    <div class="text-center p-4">No Recipes found</div>
-<% else %>
-    <% @search_results.each do |recipe| %>
-        <%= render "recipe", recipe: recipe  %>
-    <% end %>
-<% end %>
