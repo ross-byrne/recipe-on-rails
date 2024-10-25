@@ -26,7 +26,6 @@
 
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
-#!/storage/production.sqlite3
 !/storage/.keep
 /tmp/storage/*
 !/tmp/storage/.keep
